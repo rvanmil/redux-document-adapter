@@ -34,39 +34,39 @@ import { createDocumentAdapter } from 'redux-document-adapter'
 import { fetchOrders } from './thunks'
 
 export interface Order {
-	_id: ObjectId,
-	description: string,
-	date: Date
+  _id: ObjectId,
+  description: string,
+  date: Date
 }
 
 const ordersAdapter = createDocumentAdapter<Order>({
-	sortComparer: (a, b) => a.description.localeCompare(b.description)
+  sortComparer: (a, b) => a.description.localeCompare(b.description)
 })
 
 const slice = createSlice({
-	name: 'orders',
-	initialState: ordersAdapter.getInitialState({
-		status: 'idle'
-	}),
-	reducers: {
-		addOrder: ordersAdapter.addOne,
-		removeOrder: ordersAdapter.removeOne,
-		updateOrder: ordersAdapter.updateOne,
-		upsertOrder: ordersAdapter.upsertOne
-	},
-	extraReducers: (builder) => {
-		builder
-			.addCase(fetchOrders.pending, (state) => {
-				state.status = 'loading'
-			})
-			.addCase(fetchOrders.fulfilled, (state, action) => {
-				ordersAdapter.setAll(state, action.payload)
-				state.status = 'idle'
-			})
-			.addCase(fetchOrders.rejected, (state) => {
-				state.status = 'idle'
-			})
-	}
+  name: 'orders',
+  initialState: ordersAdapter.getInitialState({
+    status: 'idle'
+  }),
+  reducers: {
+    addOrder: ordersAdapter.addOne,
+    removeOrder: ordersAdapter.removeOne,
+    updateOrder: ordersAdapter.updateOne,
+    upsertOrder: ordersAdapter.upsertOne
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchOrders.pending, (state) => {
+        state.status = 'loading'
+      })
+      .addCase(fetchOrders.fulfilled, (state, action) => {
+        ordersAdapter.setAll(state, action.payload)
+        state.status = 'idle'
+      })
+      .addCase(fetchOrders.rejected, (state) => {
+        state.status = 'idle'
+      })
+  }
 })
 
 export const { addOrder, removeOrder, updateOrder, upsertOrder } = slice.actions
