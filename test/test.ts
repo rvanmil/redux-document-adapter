@@ -1,5 +1,5 @@
 describe('Redux Document Adapter', () => {
-  it('should foo bar', () => {
+  it('sorry no tests yet', () => {
     expect('todo').toStrictEqual('todo')
   })
 })
