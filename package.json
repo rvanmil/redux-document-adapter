@@ -1,6 +1,6 @@
 {
   "name": "redux-document-adapter",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "An entity adapter for Redux Toolkit, modified to be used with MongoDB Realm Documents",
   "author": "René van Mil <rvanmil@me.com>",
   "license": "MIT",
