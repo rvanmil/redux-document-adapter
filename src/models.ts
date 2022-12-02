@@ -26,51 +26,58 @@ export interface DocumentDefinition<T extends Document> {
 }
 
 export interface DocumentStateAdapter<T extends Document> {
-  addMany: <S extends DocumentState<T>>(
+  addMany<S extends DocumentState<T>>(state: S, action: T[]): S
+  addMany<S extends DocumentState<T>>(state: S, action: PayloadAction<T[]>): S
+
+  addOne<S extends DocumentState<T>>(state: S, action: T): S
+  addOne<S extends DocumentState<T>>(state: S, action: PayloadAction<T>): S
+
+  removeAll<S extends DocumentState<T>>(state: S): S
+
+  removeMany<S extends DocumentState<T>>(state: S, action: ObjectId[]): S
+  removeMany<S extends DocumentState<T>>(
     state: S,
-    action: PayloadAction<T[]> | T[]
-  ) => S
-  addOne: <S extends DocumentState<T>>(
+    action: PayloadAction<ObjectId[]>
+  ): S
+
+  removeOne<S extends DocumentState<T>>(state: S, action: ObjectId): S
+  removeOne<S extends DocumentState<T>>(
     state: S,
-    action: PayloadAction<T> | T
-  ) => S
-  removeAll: <S extends DocumentState<T>>(state: S) => S
-  removeMany: <S extends DocumentState<T>>(
+    action: PayloadAction<ObjectId>
+  ): S
+
+  setAll<S extends DocumentState<T>>(state: S, action: T[]): S
+  setAll<S extends DocumentState<T>>(state: S, action: PayloadAction<T[]>): S
+
+  setMany<S extends DocumentState<T>>(state: S, action: T[]): S
+  setMany<S extends DocumentState<T>>(state: S, action: PayloadAction<T[]>): S
+
+  setOne<S extends DocumentState<T>>(state: S, action: T): S
+  setOne<S extends DocumentState<T>>(state: S, action: PayloadAction<T>): S
+
+  updateMany<S extends DocumentState<T>>(
     state: S,
-    action: PayloadAction<ObjectId[]> | ObjectId[]
-  ) => S
-  removeOne: <S extends DocumentState<T>>(
+    action: DocumentUpdate<T>[]
+  ): S
+  updateMany<S extends DocumentState<T>>(
     state: S,
-    action: PayloadAction<ObjectId> | ObjectId
-  ) => S
-  setAll: <S extends DocumentState<T>>(
+    action: PayloadAction<DocumentUpdate<T>[]>
+  ): S
+
+  updateOne<S extends DocumentState<T>>(state: S, action: DocumentUpdate<T>): S
+  updateOne<S extends DocumentState<T>>(
     state: S,
-    action: PayloadAction<T[]> | T[]
-  ) => S
-  setMany: <S extends DocumentState<T>>(
+    action: PayloadAction<DocumentUpdate<T>>
+  ): S
+
+  upsertMany<S extends DocumentState<T>>(state: S, action: T[]): S
+  upsertMany<S extends DocumentState<T>>(
     state: S,
-    action: PayloadAction<T[]> | T[]
-  ) => S
-  setOne: <S extends DocumentState<T>>(
-    state: S,
-    action: PayloadAction<T> | T
-  ) => S
-  updateMany: <S extends DocumentState<T>>(
-    state: S,
-    action: PayloadAction<DocumentUpdate<T>[]> | DocumentUpdate<T>[]
-  ) => S
-  updateOne: <S extends DocumentState<T>>(
-    state: S,
-    action: PayloadAction<DocumentUpdate<T>> | DocumentUpdate<T>
-  ) => S
-  upsertMany: <S extends DocumentState<T>>(
-    state: S,
-    action: PayloadAction<T[]> | T[]
-  ) => S
-  upsertOne: <S extends DocumentState<T>>(
-    state: S,
-    action: PayloadAction<T> | T
-  ) => S
+    action: PayloadAction<T[]>
+  ): S
+
+  upsertOne<S extends DocumentState<T>>(state: S, action: T): S
+  upsertOne<S extends DocumentState<T>>(state: S, action: PayloadAction<T>): S
 }
 
 export interface DocumentSelectors<T extends Document, S> {
